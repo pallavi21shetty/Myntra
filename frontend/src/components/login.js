@@ -47,9 +47,14 @@ const Login = () => {
       navigate("/");
       setMessage("Login successful!");
 
-      console.log(res?.data?.token);
-      // Store the token or other data
-      localStorage.setItem("token", res?.data?.token);
+      if (res?.data?.token) {
+        // Store the token or other data
+        localStorage.setItem("token", res?.data?.token);
+        console.log(res.data);
+      } else {
+        navigate("/login");
+      }
+
       const login = () => {
         const userData = { email: formData.email };
         dispatch({ type: "LOGIN", payload: userData });

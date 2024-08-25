@@ -40,8 +40,6 @@ router.post(
     const { name, description, price, category, stock, imageUrl } = req.body;
     const user = req.user;
 
-    console.log(user);
-
     // Check if the user is a staff member
     if (user.userType !== "staff") {
       return res.status(403).send("Access forbidden: Staff only");
@@ -55,11 +53,10 @@ router.post(
         category,
         stock,
         imageUrl,
+        userID: user._id,
       });
       await newProduct.save();
-      res
-        .status(201)
-        .json({ message: "Product created successfully", product: newProduct });
+      res.status(201).json({ message: "Product added successfuly" });
     } catch (error) {
       res.status(400).send(error.message);
     }
@@ -80,7 +77,7 @@ router.get("/", async (req, res) => {
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
-    res.json({ Products, totalPage, page }).status(200);
+    res.json({ Products, totalPage, page }).status(200).cookie("lofer", "Yes");
   } catch (error) {
     res.status(500).json({ err: error });
   }

@@ -4,11 +4,19 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
 const { MONGO_URI } = require("./config/config");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // Allows all origins
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Connect to MongoDB
 mongoose

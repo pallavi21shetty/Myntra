@@ -11,6 +11,7 @@ import CartDetails from "./screens/cartedItems"; // Assuming you have a componen
 import ProceedToPayment from "./screens/proceedToPayment";
 import Register from "./components/register";
 import Login from "./components/login";
+import ProductForm from "./components/ProductForm";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/">
         <Route index element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/product_form" element={<ProductForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/women" element={<WomenProducts />} />
         <Route path="/men" element={<MenProducts />} />

@@ -35,8 +35,6 @@ router.post(
   handleValidationErrors,
   async (req, res) => {
     const { email, password, name, userType } = req.body;
-    console.log(req.body);
-
     try {
       if (!email || !password || !name || !userType) {
         return res.json({ message: "All fields are required" });
@@ -71,7 +69,6 @@ router.post(
   handleValidationErrors,
   async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
     try {
       const user = await User.findOne({ email });
       if (!user) return res.status(400).send("Invalid credentials");
@@ -79,8 +76,9 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).send("Invalid credentials");
 
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
-      res.json({ token }).status(201);
+      const token = jwt.sign({ id: user._id }, JWT_SECRET);
+
+      res.status(201).json({ token: token, message: "Logged in successfully" });
     } catch (error) {
       res.status(400).send(error.message);
     }

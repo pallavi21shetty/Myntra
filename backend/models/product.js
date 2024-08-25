@@ -9,6 +9,11 @@ const productSchema = new mongoose.Schema(
     category: { type: String, required: true },
     stock: { type: Number, default: 0 },
     imageUrl: { type: String }, // Optional field for product image
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

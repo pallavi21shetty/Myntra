@@ -5,13 +5,13 @@ const { check } = require("express-validator");
 
 // Authentication Middleware
 const auth = async (req, res, next) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+  const token = await req.headers?.authorization?.split(" ")[1];
+
   if (!token) return res.status(401).send(`Token: ${token} Access denied.`);
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(decoded.id);
-    // console.log(user);
     // Check if the user exists and token is valid
     if (!user) return res.status(401).send("User not found");
 
