@@ -12,6 +12,7 @@ import ProceedToPayment from "./screens/proceedToPayment";
 import Register from "./components/register";
 import Login from "./components/login";
 import ProductForm from "./components/ProductForm";
+import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/product_form" element={<ProductForm />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/women" element={<WomenProducts />} />
         <Route path="/men" element={<MenProducts />} />

@@ -4,6 +4,8 @@ const { auth } = require("../middleware/auth");
 // const Product = require(?"../models/product");
 const Product = require("../models/product");
 const { check, validationResult } = require("express-validator");
+const path = require("path");
+const { upload } = require("../utility/multer");
 
 const router = express.Router();
 
@@ -20,6 +22,7 @@ const handleValidationErrors = (req, res, next) => {
 router.post(
   "/create",
   [
+    upload,
     auth, // Ensure the user is authenticated
     check("name").not().isEmpty().withMessage("Product name is required"),
     check("description")
@@ -40,9 +43,15 @@ router.post(
     const { name, description, price, category, stock, imageUrl } = req.body;
     const user = req.user;
 
+    console.log(req.file, req.body);
+
     // Check if the user is a staff member
-    if (user.userType !== "staff") {
-      return res.status(403).send("Access forbidden: Staff only");
+    // if (user.userType !== "staff") {
+    //   return res.status(403).send("Access forbidden: Staff only");
+    // }
+
+    if (!req.file) {
+      return res.status(400).send("Image file is required");
     }
 
     try {
@@ -52,11 +61,10 @@ router.post(
         price,
         category,
         stock,
-        imageUrl,
-        userID: user._id,
+        imageUrl: req.file.filename,
       });
       await newProduct.save();
-      res.status(201).json({ message: "Product added successfuly" });
+      res.json({ message: "successfll", newProduct }).status(201);
     } catch (error) {
       res.status(400).send(error.message);
     }
@@ -87,7 +95,18 @@ router.get("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    // Map products to include full image URL
+    const productsWithImageUrls = products.map((product) => ({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+      stock: product.stock,
+      imageUrl: `http://localhost:3000/static/${product.imageUrl}`, // Construct the full image URL
+    }));
+
+    // Send the list of products with image URLs
+    res.json(productsWithImageUrls);
   } catch (error) {
     res.status(500).send("Server Error");
   }

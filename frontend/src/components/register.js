@@ -52,11 +52,14 @@ const Register = () => {
   };
 
   return (
-    <div className="container ">
+    <div
+      className="container "
+      style={{ background: "#fdefe7", height: "100vh" }}
+    >
       <Navbar />
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
+      <div className="row justify-content-center ">
+        <div className="col-md-6 mt-5 ">
+          <div className="card mt-5 ">
             <div className="card-header">
               <h2 className="text-center">Register</h2>
             </div>
@@ -115,7 +118,15 @@ const Register = () => {
                   </select>
                 </div>
 
-                <button type="submit" className="btn btn-primary w-100">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100"
+                  style={{
+                    backgroundColor: "#ff3f6c",
+                    color: "white",
+                    fontWeight: 700,
+                  }}
+                >
                   Register
                 </button>
               </form>

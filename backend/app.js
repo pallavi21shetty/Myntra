@@ -6,8 +6,10 @@ const productRoutes = require("./routes/products");
 const { MONGO_URI } = require("./config/config");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+const path = require("path");
 const app = express();
+
+app.use(express.static(path.join(__dirname, "./public")));
 app.use(
   cors({
     origin: "*", // Allows all origins

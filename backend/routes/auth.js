@@ -78,7 +78,9 @@ router.post(
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
-      res.status(201).json({ token: token, message: "Logged in successfully" });
+      res
+        .status(201)
+        .json({ token: token, message: "Logged in successfully", user: user });
     } catch (error) {
       res.status(400).send(error.message);
     }
