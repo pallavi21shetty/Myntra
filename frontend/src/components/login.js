@@ -38,7 +38,7 @@ const Login = () => {
           },
         }
       );
-      // navigate("/");
+      navigate("/");
       // console.log(res.data.user);
 
       dispatch(login(res.data.user));
