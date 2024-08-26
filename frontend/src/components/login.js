@@ -4,6 +4,7 @@ import Navbar from "./navBar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../reducers/userReducer";
+// import image from "./singup.jpg";
 
 const Login = () => {
   //user Login infomation

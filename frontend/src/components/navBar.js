@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { isLogin, userDetails } = useSelector((state) => state.user);
-  console.log(isLogin);
+  console.log(isLogin, userDetails);
   function logoutHandler() {
     dispatch(logout());
     navigate("/login");
@@ -43,30 +43,39 @@ const Navbar = () => {
 
           <div className="collapse navbar-collapse" id="myNav">
             <div className="navbar-nav ms-auto">
-              <Link className="nav-link active" aria-current="page" to="/">
-                {" "}
-                All{" "}
-              </Link>
-              <Link className="nav-link" to="/men">
-                {" "}
-                Men
-              </Link>
-              <Link className="nav-link" to="/women">
-                {" "}
-                Women
-              </Link>
-              <Link className="nav-link" to="/kids">
-                {" "}
-                Kids
-              </Link>
-              <Link className="nav-link" to="/accessories">
-                {" "}
-                Home & Living{" "}
-              </Link>
-              <Link className="nav-link" to="/cosmetics">
-                {" "}
-                Beauty{" "}
-              </Link>
+              {userDetails?.userType !== "staff" ? (
+                <div className="d-flex justify-content-between align-items-center">
+                  {" "}
+                  <Link className="nav-link active" aria-current="page" to="/">
+                    {" "}
+                    All{" "}
+                  </Link>
+                  <Link className="nav-link" to="/men">
+                    {" "}
+                    Men
+                  </Link>
+                  <Link className="nav-link" to="/women">
+                    {" "}
+                    Women
+                  </Link>
+                  <Link className="nav-link" to="/kids">
+                    {" "}
+                    Kids
+                  </Link>
+                  <Link className="nav-link" to="/accessories">
+                    {" "}
+                    Home & Living{" "}
+                  </Link>
+                  <Link className="nav-link" to="/cosmetics">
+                    {" "}
+                    Beauty{" "}
+                  </Link>
+                </div>
+              ) : (
+                <Link className="nav-link" to="/product_form">
+                  Pulish Product
+                </Link>
+              )}
               {!isLogin && (
                 <Link className="nav-link" to="/login">
                   Login
