@@ -61,7 +61,7 @@ router.post(
         price,
         category,
         stock,
-        imageUrl: req.file.filename,
+        imageUrl,
       });
       await newProduct.save();
       res.json({ message: "successfll", newProduct }).status(201);
@@ -74,20 +74,27 @@ router.post(
 //Get the pagination
 router.get("/", async (req, res) => {
   try {
-    const page = parseInt(req.query.page);
+    const page = parseInt(req.query.page) || 1; // default page = 1
     const perPage = 10;
     const totalProduct = await Product.countDocuments();
     const totalPage = Math.ceil(totalProduct / perPage);
+
     if (page > totalPage) {
       return res.status(404).json({ message: "Page not found" });
     }
+
     const Products = await Product.find()
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
-    res.json({ Products, totalPage, page }).status(200).cookie("lofer", "Yes");
+
+    res
+      .status(200)
+      .cookie("lofer", "Yes")
+      .json({ Products, totalPage, page });
+
   } catch (error) {
-    res.status(500).json({ err: error });
+    res.status(500).json({ err: error.message });
   }
 });
 
@@ -102,7 +109,7 @@ router.get("/all", async (req, res) => {
       price: product.price,
       category: product.category,
       stock: product.stock,
-      imageUrl: `http://localhost:3000/static/${product.imageUrl}`, // Construct the full image URL
+      imageUrl: `http://localhost:5000/static/${product.imageUrl}`, // Construct the full image URL
     }));
 
     // Send the list of products with image URLs

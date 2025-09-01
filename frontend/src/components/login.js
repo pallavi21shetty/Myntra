@@ -1,9 +1,9 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "./navBar";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../reducers/userReducer";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/userReducer";
 // import image from "./singup.jpg";
 
 const Login = () => {
@@ -31,7 +31,7 @@ const Login = () => {
     setError("");
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login/",
+        "http://localhost:5000/api/auth/login/",
         formData,
         {
           headers: {
